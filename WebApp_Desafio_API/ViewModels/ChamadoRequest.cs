@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp_Desafio_API.ViewModels
 {
@@ -8,28 +9,22 @@ namespace WebApp_Desafio_API.ViewModels
     public class ChamadoRequest
     {
         /// <summary>
-        /// ID do Chamado
+        /// ID do Chamado (0 para inserir)
         /// </summary>
         public int id { get; set; }
 
-        /// <summary>
-        /// Assunto do Chamado
-        /// </summary>
+        [Required(ErrorMessage = "O Assunto é obrigatório")]
+        [MaxLength(120, ErrorMessage = "O Assunto não pode ultrapassar 120 caracteres")]
         public string assunto { get; set; }
 
-        /// <summary>
-        /// Solicitante do Chamado
-        /// </summary>
+        [Required(ErrorMessage = "O Solicitante é obrigatório")]
+        [MaxLength(100, ErrorMessage = "O Solicitante não pode ultrapassar 100 caracteres")]
         public string solicitante { get; set; }
 
-        /// <summary>
-        /// ID do Departamento do Chamado
-        /// </summary>
+        [Range(1, int.MaxValue, ErrorMessage = "O Departamento é obrigatório")]
         public int idDepartamento { get; set; }
 
-        /// <summary>
-        /// Data de Abertura do Chamado
-        /// </summary>
+        [Required(ErrorMessage = "A Data de Abertura é obrigatória")]
         public DateTime dataAbertura { get; set; }
     }
 }

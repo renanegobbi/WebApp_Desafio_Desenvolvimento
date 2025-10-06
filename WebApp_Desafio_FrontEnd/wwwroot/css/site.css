@@ -64,6 +64,23 @@ body {
 .row .col-md-3 {
     text-align: center;
 }
-.row .col-md-3 span {
-    font-size: 200%;
+
+    .row .col-md-3 span {
+        font-size: 200%;
+    }
+
+label.error {
+    color: #b94a48;
+    margin-top: 2px;
+    font-weight: normal;
+    font-size: 10px;
+    display: inline;
+}
+
+#dataTables-Chamados tbody tr {
+    cursor: pointer;
+}
+
+#dataTables-Chamados tbody tr:hover {
+    background-color: #eaf3ff;
 }

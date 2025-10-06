@@ -1,6 +1,7 @@
 ﻿@model WebApp_Desafio_FrontEnd.ViewModels.ChamadoViewModel
 
 @using WebApp_Desafio_FrontEnd.ViewModels
+@using WebApp_Desafio_FrontEnd.Helpers
 
 <div class="row wrapper border-bottom white-bg page-heading header-title">
     <div class="col-sm-12 col-md-6 text-left align-self-center order-md-0 order-12">
@@ -17,15 +18,25 @@
 
             <div class="row">
                 <div class="form-group col-lg-7 col-md-6 col-sm-12">
-                    <label class="form-label" asp-for="Assunto"></label>
-                    <input type="text" class="form-control" asp-for="Assunto">
+                    <label class="form-label" asp-for="Assunto"></label> @CustomHtmlHelper.IconeCampoObrigatorio("Assunto")
+                    <input type="text" class="form-control" placeholder="Digite o assunto do chamado" asp-for="Assunto">
                     <span class="text-danger" asp-validation-for="Assunto"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-7 col-md-6 col-sm-12">
-                    <label class="form-label" asp-for="Solicitante"></label>
-                    <input type="text" class="form-control" asp-for="Solicitante">
+                    <label class="form-label" asp-for="Solicitante"></label> @CustomHtmlHelper.IconeCampoObrigatorio("Solicitante")
+                    @* <input type="text" class="form-control" asp-for="Solicitante"> *@
+                    <select id="Solicitante" name="Solicitante" class="form-control select2">
+                        <option value="">Selecione ou digite o nome</option>
+                        @if (Model.listaSolicitantes != null && Model.listaSolicitantes.Any())
+                        {
+                            foreach (var item in Model.listaSolicitantes)
+                            {
+                                <option value="@item.Solicitante">@item.Solicitante</option>
+                            }
+                        }
+                    </select>
                     <span class="text-danger" asp-validation-for="Solicitante"></span>
                 </div>
             </div>
@@ -88,7 +99,14 @@
 
 @section scripts
     {
+
+    <script>
+        window.apiBaseUrl = '@ViewData["ApiBaseUrl"]';
+    </script>
+    <!-- Select2 -->
+    <script src="~/lib/select2/js/i18n/pt-BR.js"></script>
     <!-- SweetAlert2 -->
+    @* <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script> *@
     <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- Bootstrap Datepicker -->
     <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>

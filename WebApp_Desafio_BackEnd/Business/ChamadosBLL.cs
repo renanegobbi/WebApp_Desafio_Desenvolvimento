@@ -19,12 +19,17 @@ namespace WebApp_Desafio_BackEnd.Business
             return dal.ObterChamado(idChamado);
         }
 
-        public bool GravarChamado(int ID, string Assunto, string Solicitante, int IdDepartamento, DateTime DataAbertura)
+        public IEnumerable<Solicitante> ObterNomeSolicitante(string nome)
+        {
+            return dal.ObterNomeSolicitante(nome);
+        }
+
+        public int GravarChamado(int ID, string Assunto, string Solicitante, int IdDepartamento, DateTime DataAbertura)
         {
             return dal.GravarChamado(ID, Assunto, Solicitante, IdDepartamento, DataAbertura);
         }
 
-        public bool ExcluirChamado(int idChamado)
+        public int ExcluirChamado(int idChamado)
         {
             return dal.ExcluirChamado(idChamado);
         }

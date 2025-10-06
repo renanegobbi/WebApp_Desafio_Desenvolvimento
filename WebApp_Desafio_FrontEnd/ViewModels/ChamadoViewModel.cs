@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Runtime.Serialization;
@@ -47,5 +48,12 @@ namespace WebApp_Desafio_FrontEnd.ViewModels
                 DataAbertura = DateTime.Parse(value, ptBR);
             }
         }
+
+        public List<ListaSolicitantes> listaSolicitantes { get; set; }
+    }
+
+    public class ListaSolicitantes{
+        public int Id { get; set; }
+        public string Solicitante { get; set; }
     }
 }

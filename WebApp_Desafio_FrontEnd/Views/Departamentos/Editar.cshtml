@@ -1,0 +1,64 @@
+﻿@model WebApp_Desafio_FrontEnd.ViewModels.DepartamentoViewModel
+@using Newtonsoft.Json
+@using WebApp_Desafio_FrontEnd.ViewModels
+@using WebApp_Desafio_FrontEnd.Helpers
+
+<div class="row wrapper border-bottom white-bg page-heading header-title">
+    <div class="col-sm-12 col-md-6 text-left align-self-center order-md-0 order-12">
+        <h2>Editar Departamento</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <form id="form" asp-controller="Departamentos" asp-action="Cadastrar" class="wizard-big" enctype="multipart/form-data" role="form" onsubmit="return false;">
+            <input type="hidden" asp-for="ID" />
+
+            <div class="row">
+                <div class="form-group col-lg-7 col-md-6 col-sm-12">
+                    <label class="form-label" asp-for="Descricao"></label> @CustomHtmlHelper.IconeCampoObrigatorio("Descricao")
+                    @* <select id="Descricao" class="form-control" data-Descricao="@Model.Descricao"></select> *@
+                    <input type="text" class="form-control" asp-for="Descricao">
+                    <span class="text-danger" asp-validation-for="Descricao"></span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="panel-body">
+    <fieldset>
+        <div class="row">
+            <div class="form-group col-sm-12 text-right float-right mb-0">
+                <button type="button" id="btnCancelar" class="btn btn-outline btn-default">Cancelar</button>
+                <button type="button" id="btnSalvar" class="btn btn-outline btn-primary">Salvar Alterações</button>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+@section styles {
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
+}
+
+@section scripts {
+
+    <!-- Select2 -->
+    <script src="~/lib/select2/js/i18n/pt-BR.js"></script>
+
+    <script>
+        const departamentoModel = @Html.Raw(JsonConvert.SerializeObject(new
+            {
+                id = Model.ID,
+                descricao = Model.Descricao ?? ""
+            }))
+    </script>
+
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.pt-br.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
+    <script src="~/js/Departamentos/Editar.js" asp-append-version="true"></script>
+}

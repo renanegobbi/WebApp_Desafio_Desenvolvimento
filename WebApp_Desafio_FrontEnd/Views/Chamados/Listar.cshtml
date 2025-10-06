@@ -5,21 +5,14 @@
 }
 
 <div class="row mt-3">
-    @* <div class="col-sm-12 col-md-12 col-lg-6 no-margins text-right pt-2" style="padding: 4px 0 0 0;background-color: #f00"> *@
     <div class="col-lg-6 text-left">
         <button type="button" class="btn btn-outline btn-primary" id="btnRelatorio">
-            <i class="fa fa-file-pdf-o"></i> Relatório
+            <i class="far fa-file-pdf"></i> Relatório
         </button>
     </div>
     <div class="col-lg-6 text-right">
         <button type="button" class="btn btn-outline btn-primary" id="btnAdicionar">
             <i class="fa fa-plus"></i> Adicionar
-        </button>
-        <button type="button" class="btn btn-outline btn-primary" id="btnEditar">
-            <i class="fa fa-pencil"></i> Editar
-        </button>
-        <button type="button" class="btn btn-outline btn-danger" id="btnExcluir">
-            <i class="fa fa-trash"></i> Excluir
         </button>
     </div>
 </div>
@@ -35,6 +28,7 @@
                     <th>@Html.DisplayNameFor(model => model.Solicitante)</th>
                     <th>@Html.DisplayNameFor(model => model.Departamento)</th>
                     <th>@Html.DisplayNameFor(model => model.DataAbertura)</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,6 +45,10 @@
 
 @section scripts 
 {
+    <script>
+        window.apiBaseUrl = '@ViewData["ApiBaseUrl"]';
+    </script>
+
     <!-- SweetAlert2 -->
     <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
 

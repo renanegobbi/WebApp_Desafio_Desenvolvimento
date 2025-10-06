@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<iasettings>
+  <projectproperties>
+    <manufacturer>renan</manufacturer>
+    <productname>WebApp_Desafio_Desenvolvimento</productname>
+    <productversion>1.0.0.0</productversion>
+    <productcode>{f698d7ad-c29e-4f31-b45c-fad4a02f5326}</productcode>
+    <upgradecode>{aed81a1a-6640-45d2-b400-3feaae0bb4af}</upgradecode>
+    <language>0</language>
+    <languagename>English</languagename>
+  </projectproperties>
+  <summary>
+    <title>WebApp_Desafio_Desenvolvimento</title>
+    <subject>WebApp_Desafio_Desenvolvimento</subject>
+    <author>renan</author>
+    <summarycomments>WebApp_Desafio_Desenvolvimento</summarycomments>
+    <revisioncode>{fcf48b95-f170-4d77-a7c8-b2c06cee8792}</revisioncode>
+    <uacelevation>highestAvailable</uacelevation>
+  </summary>
+  <addremove>
+    <publishername>renan</publishername>
+    <contactname>renan</contactname>
+    <helplink>http://www.mywebsite.com</helplink>
+    <productupdatelink>http://www.mywebsite.com</productupdatelink>
+    <addremovecomments>All Rights Reserved</addremovecomments>
+    <iconfile />
+  </addremove>
+  <codegen>
+    <generateincludefiles>0</generateincludefiles>
+    <generatefeatures>1</generatefeatures>
+    <refreshscript>0</refreshscript>
+  </codegen>
+  <compilervariables>
+    <variables />
+  </compilervariables>
+  <build>
+    <buildtype>0</buildtype>
+    <buildasmsi>False</buildasmsi>
+    <cachesources>1</cachesources>
+  </build>
+  <targetfolders />
+  <files>
+    <filedetails filename="C:\Projetos\DESAFIOS\NETSPEED\WebApp_Desafio_Desenvolvimento\WebApp_Desafio_FrontEnd\bin\Debug\netcoreapp2.1\WebApp_Desafio_FrontEnd.dll" targetlocation="$TARGETDIR$" type="2" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="0" runprogram="0" installfilecommand="1" VsProjectOutputfile ="1" />
+    <filedetails filename="C:\Projetos\DESAFIOS\NETSPEED\WebApp_Desafio_Desenvolvimento\WebApp_Desafio_API\bin\Debug\netcoreapp2.1\WebApp_Desafio_API.dll" targetlocation="$TARGETDIR$" type="2" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="0" runprogram="0" installfilecommand="1" VsProjectOutputfile ="1" />
+    <filedetails filename="C:\Projetos\DESAFIOS\NETSPEED\WebApp_Desafio_Desenvolvimento\WebApp_Desafio_BackEnd\bin\Debug\WebApp_Desafio_BackEnd.dll" targetlocation="$TARGETDIR$" type="3" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="0" runprogram="0" installfilecommand="1" VsProjectOutputfile ="1" />
+    <filedetails filename="C:\Projetos\DESAFIOS\NETSPEED\WebApp_Desafio_Desenvolvimento\WinForm_Desafio_Reports\bin\Debug\WinForm_Desafio_Reports.exe" targetlocation="$TARGETDIR$" type="1" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="1" runprogram="0" installfilecommand="1" VsProjectOutputfile ="1" />
+  </files>
+  <dependencies />
+  <registry />
+  <dialogtheme>
+    <themename>Official</themename>
+  </dialogtheme>
+  <authenticode>
+    <sign>0</sign>
+    <mode>0</mode>
+    <certificatefile />
+    <keyfile />
+    <pfxfile />
+    <productinfourl />
+    <authpassword />
+    <timestampurl />
+    <evCertFile />
+    <evKeyContainerName />
+    <signall>0</signall>
+  </authenticode>
+  <compression>
+    <compressiontype>6</compressiontype>
+    <encrypt>0</encrypt>
+    <compressionpassword />
+  </compression>
+  <output>
+    <outputtype>0</outputtype>
+    <location />
+    <filename />
+    <calculatefilehash>0</calculatefilehash>
+    <refreshrevisioncode>1</refreshrevisioncode>
+  </output>
+</iasettings>

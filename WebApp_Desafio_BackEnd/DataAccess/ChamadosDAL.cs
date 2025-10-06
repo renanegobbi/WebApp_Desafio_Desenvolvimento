@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebApp_Desafio_BackEnd.Models;
+using System.Data.Common;
 
 namespace WebApp_Desafio_BackEnd.DataAccess
 {
@@ -72,7 +73,7 @@ namespace WebApp_Desafio_BackEnd.DataAccess
 
         public Chamado ObterChamado(int idChamado)
         {
-            var chamado = Chamado.Empty;
+            Chamado chamado = null;
 
             DataTable dtChamados = new DataTable();
 
@@ -124,67 +125,109 @@ namespace WebApp_Desafio_BackEnd.DataAccess
             return chamado;
         }
 
-        public bool GravarChamado(int ID, string Assunto, string Solicitante, int IdDepartamento, DateTime DataAbertura)
+        public IEnumerable<Solicitante> ObterNomeSolicitante(string nome)
+        {
+            var lista = new List<Solicitante>();
+
+            using (var dbConnection = new SQLiteConnection(CONNECTION_STRING))
+            {
+                dbConnection.Open();
+                using (var cmd = dbConnection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT DISTINCT ID, Solicitante AS Nome FROM chamados WHERE Solicitante LIKE @nome LIMIT 10";
+                    cmd.Parameters.AddWithValue("@nome", $"%{nome}%");
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lista.Add(new Solicitante
+                            {
+                                ID = reader.GetInt32(0),
+                                Nome = reader.GetString(1)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return lista;
+        }
+
+        public int GravarChamado(int ID, string Assunto, string Solicitante, int IdDepartamento, DateTime DataAbertura)
         {
             int regsAfetados = -1;
 
             using (SQLiteConnection dbConnection = new SQLiteConnection(CONNECTION_STRING))
             {
-                using (SQLiteCommand dbCommand = dbConnection.CreateCommand())
+                dbConnection.Open(); // <-- ESSENCIAL
+
+                using (var dbCommand = dbConnection.CreateCommand())
                 {
                     if (ID == 0)
                     {
-                        dbCommand.CommandText = 
-                            "INSERT INTO chamados (Assunto,Solicitante,IdDepartamento,DataAbertura)" +
-                            "VALUES (@Assunto,@Solicitante,@IdDepartamento,@DataAbertura)";
+                        dbCommand.CommandText =
+                            "INSERT INTO chamados (Assunto, Solicitante, IdDepartamento, DataAbertura) " +
+                            "VALUES (@Assunto, @Solicitante, @IdDepartamento, @DataAbertura)";
+                        //"SELECT last_insert_rowid();";
+
+                        dbCommand.Parameters.AddWithValue("@Assunto", Assunto);
+                        dbCommand.Parameters.AddWithValue("@Solicitante", Solicitante);
+                        dbCommand.Parameters.AddWithValue("@IdDepartamento", IdDepartamento);
+                        dbCommand.Parameters.AddWithValue("@DataAbertura", DataAbertura.ToString(ANSI_DATE_FORMAT));
+
+                        dbCommand.ExecuteNonQuery();
+
+                        // agora pega o id da mesma conexão
+                        dbCommand.CommandText = "SELECT last_insert_rowid()";
+                        dbCommand.Parameters.Clear(); // limpa os parâmetros, senão ele reclama
+                        return Convert.ToInt32(dbCommand.ExecuteScalar());
                     }
                     else
                     {
-                        dbCommand.CommandText = 
-                            "UPDATE chamados " + 
-                            "SET Assunto=@Assunto, " + 
+                        dbCommand.CommandText =
+                            "UPDATE chamados " +
+                            "SET Assunto=@Assunto, " +
                             "    Solicitante=@Solicitante, " +
-                            "    IdDepartamento=@IdDepartamento, " + 
-                            "    DataAbertura=@DataAbertura " + 
-                            "WHERE ID=@ID ";
+                            "    IdDepartamento=@IdDepartamento, " +
+                            "    DataAbertura=@DataAbertura " +
+                            "WHERE ID=@ID";
+
+                        dbCommand.Parameters.AddWithValue("@ID", ID);
+                        dbCommand.Parameters.AddWithValue("@Assunto", Assunto);
+                        dbCommand.Parameters.AddWithValue("@Solicitante", Solicitante);
+                        dbCommand.Parameters.AddWithValue("@IdDepartamento", IdDepartamento);
+                        dbCommand.Parameters.AddWithValue("@DataAbertura", DataAbertura.ToString(ANSI_DATE_FORMAT));
+
+                        int rows = dbCommand.ExecuteNonQuery();
+                        return rows > 0 ? ID : -1; // se atualizou retorna o mesmo ID, senão -1
                     }
 
-                    dbCommand.Parameters.AddWithValue("@Assunto", Assunto);
-                    dbCommand.Parameters.AddWithValue("@Solicitante", Solicitante);
-                    dbCommand.Parameters.AddWithValue("@IdDepartamento", IdDepartamento);
-                    dbCommand.Parameters.AddWithValue("@DataAbertura", DataAbertura.ToString(ANSI_DATE_FORMAT));
-                    dbCommand.Parameters.AddWithValue("@ID", ID);
-
-                    dbConnection.Open();
-                    regsAfetados = dbCommand.ExecuteNonQuery();
-                    dbConnection.Close();
                 }
-
             }
-
-            return (regsAfetados > 0);
-
         }
 
-        public bool ExcluirChamado(int idChamado)
+        public int ExcluirChamado(int idChamado)
         {
-            int regsAfetados = -1;
+            //int regsAfetados = -1;
 
             using (SQLiteConnection dbConnection = new SQLiteConnection(CONNECTION_STRING))
             {
                 using (SQLiteCommand dbCommand = dbConnection.CreateCommand())
                 {
-                    dbCommand.CommandText = $"DELETE FROM chamados WHERE ID = {idChamado}";
+                    dbCommand.CommandText = "DELETE FROM chamados WHERE ID = @ID";
+                    dbCommand.Parameters.AddWithValue("@ID", idChamado);
 
                     dbConnection.Open();
-                    regsAfetados = dbCommand.ExecuteNonQuery();
-                    dbConnection.Close();
+                    int regsAfetados = dbCommand.ExecuteNonQuery();
 
+                    // se excluiu, retorna o ID; senão, retorna -1
+                    return regsAfetados > 0 ? idChamado : -1;
                 }
 
             }
 
-            return (regsAfetados > 0);
+           // return (regsAfetados > 0);
         }
     }
 }

@@ -1,14 +1,18 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using WebApp_Desafio_API.ViewModels;
+using WebApp_Desafio_API.ViewModels.Enums;
 
 namespace WebApp_Desafio_API
 {
@@ -46,11 +50,40 @@ namespace WebApp_Desafio_API
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
                 .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter()));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                    builder =>
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader());
+            });
+
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 //options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = context =>
+                {
+                    var modeStateError = context.ModelState.Values.SelectMany(v => v.Errors)
+                                                             .FirstOrDefault()?.ErrorMessage ?? "Request inválido.";
+
+                    var error = new ErrorViewModel
+                    {
+                        Message = modeStateError,
+                        StatusCode = StatusCodes.Status400BadRequest,
+                        Type = AlertTypes.warning
+                    };
+
+                    return new BadRequestObjectResult(error);
+                };
             });
 
             services.AddSwaggerGen(c =>
@@ -96,6 +129,7 @@ namespace WebApp_Desafio_API
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowFrontend");
             app.UseMvc();
 
             string swaggerPath = "/swagger/{documentname}/WebApp_Desafio_API.json";

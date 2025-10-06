@@ -35,3 +35,21 @@ body {
         display: none;
     }
 }
+
+.acoes-container .btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+* garante alinhamento horizontal e centralização */
+.acoes-container {
+    display: flex;
+    justify-content: center; /* centraliza horizontalmente */
+    align-items: center; /* centraliza verticalmente */
+    gap: 6px; /* espaçamento entre os botões */
+    height: 100%; /* ocupa a altura da célula */
+}

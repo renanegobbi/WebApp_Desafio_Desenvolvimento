@@ -31,6 +31,8 @@ namespace WebApp_Desafio_FrontEnd.Controllers
         public IActionResult Listar()
         {
             // Busca de dados está na Action Datatable()
+            var chamadosApiClient = new ChamadosApiClient();
+            ViewData["ApiBaseUrl"] = chamadosApiClient.GetApiBaseUrl();
             return View();
         }
 
@@ -65,6 +67,12 @@ namespace WebApp_Desafio_FrontEnd.Controllers
             };
             ViewData["Title"] = "Cadastrar Novo Chamado";
 
+            var chamadosApiClient = new ChamadosApiClient();
+            var teste = chamadosApiClient.GetApiBaseUrl();
+            ViewData["ApiBaseUrl"] = chamadosApiClient.GetApiBaseUrl();
+            var lstChamados = chamadosApiClient.ChamadosListar();
+            
+
             try
             {
                 var departamentosApiClient = new DepartamentosApiClient();
@@ -76,6 +84,22 @@ namespace WebApp_Desafio_FrontEnd.Controllers
                 ViewData["Error"] = ex.Message;
             }
 
+            // inicializa a lista de solicitantes
+            chamadoVM.listaSolicitantes = new List<ListaSolicitantes>();
+
+            // adiciona os solicitantes distintos (pelo nome)
+            var solicitantesUnicos = lstChamados
+                .GroupBy(c => c.Solicitante)
+                .Select(g => new ListaSolicitantes
+                {
+                    Id = g.First().ID, // ou 0 se o ID do chamado não for o do solicitante
+                    Solicitante = g.Key
+                })
+                .OrderBy(s => s.Solicitante)
+                .ToList();
+
+            chamadoVM.listaSolicitantes.AddRange(solicitantesUnicos);
+
             return View("Cadastrar", chamadoVM);
         }
 
@@ -85,45 +109,123 @@ namespace WebApp_Desafio_FrontEnd.Controllers
             try
             {
                 var chamadosApiClient = new ChamadosApiClient();
-                var realizadoComSucesso = chamadosApiClient.ChamadoGravar(chamadoVM);
+                var response = chamadosApiClient.ChamadoGravar(chamadoVM);
 
-                if (realizadoComSucesso)
-                    return Ok(new ResponseViewModel(
-                                $"Chamado gravado com sucesso!",
-                                AlertTypes.success,
-                                this.RouteData.Values["controller"].ToString(),
-                                nameof(this.Listar)));
-                else
-                    throw new ApplicationException($"Falha ao excluir o Chamado.");
+                return Json(response); // retorna JSON direto pro JS
             }
             catch (Exception ex)
             {
-                return BadRequest(new ResponseViewModel(ex));
+                return Json(new ResponseViewModel(ex));
             }
         }
 
         [HttpGet]
-        public IActionResult Editar([FromRoute] int id)
+        public IActionResult Editar(int id)
         {
-            ViewData["Title"] = "Cadastrar Novo Chamado";
+            var chamadoVM = new ChamadoViewModel()
+            {
+                DataAbertura = DateTime.Now
+            };
+            ViewData["Title"] = "Editar Chamado";
+
+            var chamadosApiClient = new ChamadosApiClient();
+            var chamado = chamadosApiClient.ChamadoObter(id);
+            var lstChamados = chamadosApiClient.ChamadosListar();
+            ViewData["ApiBaseUrl"] = chamadosApiClient.GetApiBaseUrl();
 
             try
             {
-                var chamadosApiClient = new ChamadosApiClient();
-                var chamadoVM = chamadosApiClient.ChamadoObter(id);
-
                 var departamentosApiClient = new DepartamentosApiClient();
-                ViewData["ListaDepartamentos"] = departamentosApiClient.DepartamentosListar();
 
-                return View("Cadastrar", chamadoVM);
+                ViewData["ListaDepartamentos"] = departamentosApiClient.DepartamentosListar();
             }
             catch (Exception ex)
             {
-                return BadRequest(new ResponseViewModel(ex));
+                ViewData["Error"] = ex.Message;
             }
+
+            // inicializa a lista de solicitantes
+            chamadoVM.listaSolicitantes = new List<ListaSolicitantes>();
+
+            // adiciona os solicitantes distintos (pelo nome)
+            var solicitantesUnicos = lstChamados
+                .GroupBy(c => c.Solicitante)
+                .Select(g => new ListaSolicitantes
+                {
+                    Id = g.First().ID, // ou 0 se o ID do chamado não for o do solicitante
+                    Solicitante = g.Key
+                })
+                .OrderBy(s => s.Solicitante)
+                .ToList();
+
+            chamadoVM.listaSolicitantes.AddRange(solicitantesUnicos);
+            chamadoVM.ID = id;
+            chamadoVM.IdDepartamento = chamado.IdDepartamento;
+            chamadoVM.Assunto = chamado.Assunto;
+            chamadoVM.Solicitante = chamado.Solicitante;
+            chamadoVM.DataAbertura = chamado.DataAbertura;
+            chamadoVM.Departamento = chamado.Departamento;
+
+            return View("Editar", chamadoVM);
         }
 
-        [HttpDelete]
+        //[HttpGet]
+        //public IActionResult Editar(int id)
+        //{
+        //    try
+        //    {
+        //        var chamadosApiClient = new ChamadosApiClient();
+        //        var chamado = chamadosApiClient.ChamadoObter(id);
+
+        //        var departamentosApiClient = new DepartamentosApiClient();
+        //        ViewData["ListaDepartamentos"] = departamentosApiClient.DepartamentosListar();
+
+        //        return View("Editar", chamado);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new ResponseViewModel(ex));
+        //    }
+        //}
+
+
+        //[HttpGet]
+        //public IActionResult Editar([FromRoute] int id)
+        //{
+        //    //ViewData["Title"] = "Cadastrar Novo Chamado";
+
+        //    //try
+        //    //{
+        //    //    var chamadosApiClient = new ChamadosApiClient();
+        //    //    var chamadoVM = chamadosApiClient.ChamadoObter(id);
+
+        //    //    var departamentosApiClient = new DepartamentosApiClient();
+        //    //    ViewData["ListaDepartamentos"] = departamentosApiClient.DepartamentosListar();
+
+        //    //    return View("Cadastrar", chamadoVM);
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    return BadRequest(new ResponseViewModel(ex));
+        //    //}
+
+        //    try
+        //    {
+        //        var chamadosApiClient = new ChamadosApiClient();
+        //        var chamado = chamadosApiClient.ChamadoObter(id);
+        //        var departamentosApiClient = new DepartamentosApiClient();
+
+        //        ViewData["ListaDepartamentos"] = departamentosApiClient.DepartamentosListar();
+
+        //        return View("Editar", chamado);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new ResponseViewModel(ex));
+        //    }
+        //}
+
+        [HttpPost]
         public IActionResult Excluir([FromRoute] int id)
         {
             try

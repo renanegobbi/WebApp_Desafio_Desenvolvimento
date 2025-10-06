@@ -86,15 +86,17 @@
     <Compile Include="DataAccess\ChamadosDAL.cs" />
     <Compile Include="Models\Chamado.cs" />
     <Compile Include="Models\Departamento.cs" />
+    <Compile Include="Models\Solicitante.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <!-- <None Include="DesafioDB.db" /> -->
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\DesafioDB.db">
-      <Link>Dados\DesafioDB.db</Link>
+    <Content Include="Dados\DesafioDB.db">
+      <!-- <Link>Dados\DesafioDB.db</Link> -->
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
