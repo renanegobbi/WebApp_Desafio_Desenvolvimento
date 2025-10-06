@@ -63,7 +63,7 @@ As principais tarefas propostas foram:
 
 ### 🔧 Pré-requisitos
 - **Visual Studio 2022 ou 2019**
-- **SDK .NET 6.0 ou superior**
+- **SDK .NET Core 2.1**
 - **Extensão RDLC Report Designer**  
   🔗 [Microsoft RDLC Report Designer 2022](https://marketplace.visualstudio.com/items?itemName=ProBITools.MicrosoftRdlcReportDesignerforVisualStudio2022)
 
