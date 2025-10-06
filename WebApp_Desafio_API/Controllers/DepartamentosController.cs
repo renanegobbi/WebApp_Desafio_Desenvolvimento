@@ -67,7 +67,6 @@ namespace WebApp_Desafio_API.Controllers
             try
             {
                 var departamento = this.bll.ObterDepartamento(idDepartamento);
-                //if (d == null || d.ID == 0) return NotFound("Departamento não encontrado");
                 if (departamento == null)
                 {
                     return BadRequest(new ErrorViewModel
@@ -121,9 +120,6 @@ namespace WebApp_Desafio_API.Controllers
                     });
                 }
 
-                //if (request == null) throw new ArgumentNullException("Request não informado.");
-                //if (!ModelState.IsValid) return BadRequest(ModelState);
-
                 if (request == null)
                 {
                     return BadRequest(new ErrorViewModel
@@ -149,18 +145,6 @@ namespace WebApp_Desafio_API.Controllers
                     });
                 }
 
-                //var departamento = this.bll.ObterDepartamento(request.id);
-
-                //if (departamento == null)
-                //{
-                //    return BadRequest(new ErrorViewModel
-                //    {
-                //        Message = "Departamento não informado.",
-                //        StatusCode = StatusCodes.Status400BadRequest,
-                //        Type = AlertTypes.error
-                //    });
-                //}
-
                 var idNovo = this.bll.GravarDepartamento(
                     request.id,
                     request.descricao
@@ -185,21 +169,8 @@ namespace WebApp_Desafio_API.Controllers
                 if (request.id == 0)
                     return CreatedAtAction(nameof(Obter), new { idDepartamento = idNovo }, response);
 
-                //var ok = this.bll.GravarDepartamento(request.id, request.descricao);
                 return Ok(response);
             }
-            //catch (ArgumentException ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
-            //catch (ApplicationException ex)
-            //{
-            //    return StatusCode(422, ex.Message);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(500, ex.Message);
-            //}
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorViewModel
@@ -224,8 +195,6 @@ namespace WebApp_Desafio_API.Controllers
         {
             try
             {
-                //var ok = this.bll.ExcluirDepartamento(idDepartamento);
-
                 var departamento = this.bll.ObterDepartamento(idDepartamento);
 
                 if (departamento == null || departamento.ID == 0)
@@ -258,18 +227,6 @@ namespace WebApp_Desafio_API.Controllers
 
                 return Ok(chamadoResponse);
             }
-            //catch (ArgumentException ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
-            //catch (ApplicationException ex)
-            //{
-            //    return StatusCode(422, ex.Message);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(500, ex.Message);
-            //}
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorViewModel

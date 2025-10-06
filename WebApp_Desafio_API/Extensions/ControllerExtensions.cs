@@ -40,12 +40,6 @@ namespace WebApp_Desafio_API.Extensions
             {
                 errorViewModel.StatusCode = 422;
             }
-            //else if (ex is ResponseException rex)
-            //{
-            //    errorViewModel.StatusCode = 422;
-            //    errorViewModel.PropertyName = rex.PropertyName;
-            //    errorViewModel.Validation = rex.Validation;
-            //}
 
             errorViewModel.Type = type;
 

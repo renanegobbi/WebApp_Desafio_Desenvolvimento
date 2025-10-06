@@ -16,7 +16,7 @@ namespace WebApp_Desafio_FrontEnd.ApiClients.Desafio_API
         private const string departamentosGravarUrl = "api/Departamentos/Gravar";
         private const string departamentosExcluirUrl = "api/Departamentos/Excluir";
 
-        private string desafioApiUrl = "https://localhost:44388/"; // Endereço API IIS-Express
+        private string desafioApiUrl = "https://localhost:44388/"; 
         public string GetApiBaseUrl() => desafioApiUrl;
 
         public DepartamentosApiClient() : base()
@@ -92,7 +92,6 @@ namespace WebApp_Desafio_FrontEnd.ApiClients.Desafio_API
                 string message = errorObj?.Message ?? "Erro ao processar requisição.";
                 string typeStr = errorObj?.Type ?? "error";
 
-                // Converte string em enum AlertTypes
                 Enum.TryParse(typeStr, true, out AlertTypes alertType);
 
                 return new ResponseViewModel(
@@ -115,19 +114,6 @@ namespace WebApp_Desafio_FrontEnd.ApiClients.Desafio_API
 
         public bool DepartamentoExcluir(int idDepartamento)
         {
-            //var headers = new Dictionary<string, object>()
-            //{
-            //    { "TokenAutenticacao", tokenAutenticacao }
-            //};
-
-            //var response = base.Post($"{desafioApiUrl}{departamentosExcluirUrl}", idDepartamento, headers);
-
-            //base.EnsureSuccessStatusCode(response);
-
-            //string json = base.ReadHttpWebResponseMessage(response);
-
-            //return JsonConvert.DeserializeObject<bool>(json);
-
             var headers = new Dictionary<string, object>()
             {
                 { "TokenAutenticacao", tokenAutenticacao }
@@ -145,7 +131,6 @@ namespace WebApp_Desafio_FrontEnd.ApiClients.Desafio_API
             string json = base.ReadHttpWebResponseMessage(response);
 
             return JsonConvert.DeserializeObject<bool>(json);
-
         }
     }
 }

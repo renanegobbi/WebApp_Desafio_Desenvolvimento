@@ -144,30 +144,3 @@ if ($.validator != null) {
         }
     });
 }
-
-//$('#Solicitante').select2({
-//    language: 'pt-BR',
-//    ajax: {
-//        url: window.apiBaseUrl + 'api/Departamentos/solicitantes',
-//        dataType: 'json',
-//        delay: 250,
-//        data: params => ({ nome: params.term }),
-//        processResults: data => ({
-//            results: data.map(x => ({ id: x.nome, text: x.nome }))
-//        })
-//    },
-//    placeholder: 'Digite o nome do solicitante',
-//    minimumInputLength: 1,
-//    width: '100%',
-//    tags: true,
-//    createTag: function (params) {
-//        const term = $.trim(params.term);
-//        if (term === '') return null;
-//        return { id: term, text: term, newOption: true };
-//    },
-//    templateResult: function (data) {
-//        if (data.newOption)
-//            return $('<span><strong>Adicionar novo solicitante:</strong> ' + data.text + '</span>');
-//        return data.text;
-//    }
-//});

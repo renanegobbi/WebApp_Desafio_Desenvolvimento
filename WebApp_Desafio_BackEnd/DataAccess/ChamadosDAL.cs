@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SQLite;
 using WebApp_Desafio_BackEnd.Models;
-using System.Data.Common;
 
 namespace WebApp_Desafio_BackEnd.DataAccess
 {
@@ -160,7 +156,7 @@ namespace WebApp_Desafio_BackEnd.DataAccess
 
             using (SQLiteConnection dbConnection = new SQLiteConnection(CONNECTION_STRING))
             {
-                dbConnection.Open(); // <-- ESSENCIAL
+                dbConnection.Open();
 
                 using (var dbCommand = dbConnection.CreateCommand())
                 {
@@ -169,7 +165,6 @@ namespace WebApp_Desafio_BackEnd.DataAccess
                         dbCommand.CommandText =
                             "INSERT INTO chamados (Assunto, Solicitante, IdDepartamento, DataAbertura) " +
                             "VALUES (@Assunto, @Solicitante, @IdDepartamento, @DataAbertura)";
-                        //"SELECT last_insert_rowid();";
 
                         dbCommand.Parameters.AddWithValue("@Assunto", Assunto);
                         dbCommand.Parameters.AddWithValue("@Solicitante", Solicitante);
@@ -200,7 +195,7 @@ namespace WebApp_Desafio_BackEnd.DataAccess
                         dbCommand.Parameters.AddWithValue("@DataAbertura", DataAbertura.ToString(ANSI_DATE_FORMAT));
 
                         int rows = dbCommand.ExecuteNonQuery();
-                        return rows > 0 ? ID : -1; // se atualizou retorna o mesmo ID, senão -1
+                        return rows > 0 ? ID : -1;
                     }
 
                 }
@@ -209,8 +204,6 @@ namespace WebApp_Desafio_BackEnd.DataAccess
 
         public int ExcluirChamado(int idChamado)
         {
-            //int regsAfetados = -1;
-
             using (SQLiteConnection dbConnection = new SQLiteConnection(CONNECTION_STRING))
             {
                 using (SQLiteCommand dbCommand = dbConnection.CreateCommand())
@@ -221,13 +214,10 @@ namespace WebApp_Desafio_BackEnd.DataAccess
                     dbConnection.Open();
                     int regsAfetados = dbCommand.ExecuteNonQuery();
 
-                    // se excluiu, retorna o ID; senão, retorna -1
                     return regsAfetados > 0 ? idChamado : -1;
                 }
 
             }
-
-           // return (regsAfetados > 0);
         }
     }
 }

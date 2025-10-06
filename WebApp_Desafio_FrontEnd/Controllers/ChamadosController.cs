@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCore.Reporting;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,8 +8,6 @@ using System.Linq;
 using WebApp_Desafio_FrontEnd.ApiClients.Desafio_API;
 using WebApp_Desafio_FrontEnd.ViewModels;
 using WebApp_Desafio_FrontEnd.ViewModels.Enums;
-using AspNetCore.Reporting;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 
 namespace WebApp_Desafio_FrontEnd.Controllers
 {
@@ -84,15 +83,13 @@ namespace WebApp_Desafio_FrontEnd.Controllers
                 ViewData["Error"] = ex.Message;
             }
 
-            // inicializa a lista de solicitantes
             chamadoVM.listaSolicitantes = new List<ListaSolicitantes>();
 
-            // adiciona os solicitantes distintos (pelo nome)
             var solicitantesUnicos = lstChamados
                 .GroupBy(c => c.Solicitante)
                 .Select(g => new ListaSolicitantes
                 {
-                    Id = g.First().ID, // ou 0 se o ID do chamado não for o do solicitante
+                    Id = g.First().ID,
                     Solicitante = g.Key
                 })
                 .OrderBy(s => s.Solicitante)
@@ -111,7 +108,7 @@ namespace WebApp_Desafio_FrontEnd.Controllers
                 var chamadosApiClient = new ChamadosApiClient();
                 var response = chamadosApiClient.ChamadoGravar(chamadoVM);
 
-                return Json(response); // retorna JSON direto pro JS
+                return Json(response); 
             }
             catch (Exception ex)
             {
@@ -144,15 +141,13 @@ namespace WebApp_Desafio_FrontEnd.Controllers
                 ViewData["Error"] = ex.Message;
             }
 
-            // inicializa a lista de solicitantes
             chamadoVM.listaSolicitantes = new List<ListaSolicitantes>();
 
-            // adiciona os solicitantes distintos (pelo nome)
             var solicitantesUnicos = lstChamados
                 .GroupBy(c => c.Solicitante)
                 .Select(g => new ListaSolicitantes
                 {
-                    Id = g.First().ID, // ou 0 se o ID do chamado não for o do solicitante
+                    Id = g.First().ID, 
                     Solicitante = g.Key
                 })
                 .OrderBy(s => s.Solicitante)
@@ -168,62 +163,6 @@ namespace WebApp_Desafio_FrontEnd.Controllers
 
             return View("Editar", chamadoVM);
         }
-
-        //[HttpGet]
-        //public IActionResult Editar(int id)
-        //{
-        //    try
-        //    {
-        //        var chamadosApiClient = new ChamadosApiClient();
-        //        var chamado = chamadosApiClient.ChamadoObter(id);
-
-        //        var departamentosApiClient = new DepartamentosApiClient();
-        //        ViewData["ListaDepartamentos"] = departamentosApiClient.DepartamentosListar();
-
-        //        return View("Editar", chamado);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new ResponseViewModel(ex));
-        //    }
-        //}
-
-
-        //[HttpGet]
-        //public IActionResult Editar([FromRoute] int id)
-        //{
-        //    //ViewData["Title"] = "Cadastrar Novo Chamado";
-
-        //    //try
-        //    //{
-        //    //    var chamadosApiClient = new ChamadosApiClient();
-        //    //    var chamadoVM = chamadosApiClient.ChamadoObter(id);
-
-        //    //    var departamentosApiClient = new DepartamentosApiClient();
-        //    //    ViewData["ListaDepartamentos"] = departamentosApiClient.DepartamentosListar();
-
-        //    //    return View("Cadastrar", chamadoVM);
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //    return BadRequest(new ResponseViewModel(ex));
-        //    //}
-
-        //    try
-        //    {
-        //        var chamadosApiClient = new ChamadosApiClient();
-        //        var chamado = chamadosApiClient.ChamadoObter(id);
-        //        var departamentosApiClient = new DepartamentosApiClient();
-
-        //        ViewData["ListaDepartamentos"] = departamentosApiClient.DepartamentosListar();
-
-        //        return View("Editar", chamado);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new ResponseViewModel(ex));
-        //    }
-        //}
 
         [HttpPost]
         public IActionResult Excluir([FromRoute] int id)

@@ -27,7 +27,6 @@ namespace WebApp_Desafio_FrontEnd.Controllers
         [HttpGet]
         public IActionResult Listar()
         {
-            // Busca de dados está na Action Datatable()
             var departamentosApiClient = new DepartamentosApiClient();
             ViewData["ApiBaseUrl"] = departamentosApiClient.GetApiBaseUrl();
             return View();

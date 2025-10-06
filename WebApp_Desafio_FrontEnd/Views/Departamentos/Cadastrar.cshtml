@@ -11,34 +11,6 @@
 
 <div class="row">
     <div class="col-lg-12">
-
-        @* <form id="form" asp-action="Cadastrar" class="wizard-big" enctype="multipart/form-data" role="form" onsubmit="return false;">
-
-            <input type="hidden" asp-for="ID" />
-
-            <div class="row">
-                <div class="form-group col-lg-5 col-md-4 col-sm-8">
-                    <label class="form-label" asp-for="Descricao"></label>
-                    <select data-placeholder="Selecionar" class="form-control chosen-select" asp-for="ID" readonly="readonly" id="Descricao">
-                        <option value=""></option>
-                        @foreach (var item in ViewData["ListaDepartamentos"] as List<DepartamentoViewModel>)
-                        {
-                            if (item.ID == Model.ID)
-                            {
-                                <option data-codbanco="@item.ID" value="@item.ID" selected="selected">@item.Descricao</option>
-                            }
-                            else
-                            {
-                                <option data-codbanco="@item.ID" value="@item.ID">@item.Descricao</option>
-                            }
-                        }
-                    </select>
-                    <span class="text-danger" asp-validation-for="Descricao"></span>
-                </div>
-            </div>
-
-        </form> *@
-
         <form id="form" asp-action="Cadastrar" class="wizard-big" enctype="multipart/form-data" role="form" onsubmit="return false;">
             <input type="hidden" asp-for="ID" />
 
@@ -68,8 +40,6 @@
 @section styles
     {
     <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
-    @*<link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css" />*@
-    @*<link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" />*@
 }
 
 @section scripts
@@ -81,7 +51,6 @@
     <!-- Select2 -->
     <script src="~/lib/select2/js/i18n/pt-BR.js"></script>
     <!-- SweetAlert2 -->
-    @* <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script> *@
     <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- Bootstrap Datepicker -->
     <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>

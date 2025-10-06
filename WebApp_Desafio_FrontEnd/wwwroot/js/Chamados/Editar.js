@@ -1,24 +1,5 @@
 ﻿$(document).ready(function () {
 
-    //function preencherFormulario(chamado) {
-    //    $('#Assunto').val(chamado.Assunto);
-    //    $('#DataAbertura').val(chamado.DataAbertura);
-    //    $('#Departamento').val(chamado.IdDepartamento).trigger('change');
-    //    const solicitanteAtual = $('#Solicitante').data('solicitante');
-
-    //    if (solicitanteAtual) {
-    //        const option = new Option(solicitanteAtual, solicitanteAtual, true, true);
-    //        $('#Solicitante').append(option).trigger('change');
-    //    }
-    //}
-
-    //preencherFormulario({
-    //    Assunto: '@Model.Assunto',
-    //    DataAbertura: '@Model.DataAbertura.ToString("dd/MM/yyyy")',
-    //    IdDepartamento: '@Model.IdDepartamento',
-    //    Solicitante: '@Model.Solicitante'
-    //});
-
     // Calendário
     $('.glyphicon-calendar').closest("div.date").datepicker({
         todayBtn: "linked",
@@ -119,55 +100,6 @@
         }
     });
 
-    // Função para preencher os campos
-    //function preencherFormulario() {
-    //    //$('#Assunto').val('@Model.Assunto');
-    //    //$('#DataAbertura').val('@Model.DataAbertura.ToString("dd/MM/yyyy")');
-    //    //$('#Departamento').val('@Model.IdDepartamento').trigger('change');
-
-    //    const solicitanteAtual = $('#Solicitante').data('solicitante');
-    //    if (solicitanteAtual) {
-    //        const option = new Option(solicitanteAtual, solicitanteAtual, true, true);
-    //        $('#Solicitante').append(option).trigger('change');
-    //    }
-
-    //    $('#Assunto').val(chamado.Assunto);
-    //    $('#DataAbertura').val(chamado.DataAbertura);
-    //    $('#Departamento').val(chamado.IdDepartamento).trigger('change');
-
-
-    //}
-
-    //// Chama a função DEPOIS de inicializar o select2
-    //preencherFormulario();
-
-
-    //const chamado = {
-    //    Assunto: $('#Assunto').val(),
-    //    DataAbertura: $('#DataAbertura').val(),
-    //    IdDepartamento: '@Model.IdDepartamento',
-    //    Solicitante: '@Model.Solicitante',
-    //    departamento: '@Model.Departamento',
-    //};
-
-    //function preencherFormulario() {
-    //    $('#Assunto').val(chamado.Assunto);
-    //    $('#DataAbertura').val(chamado.DataAbertura);
-    //    $('#Departamento').val(chamado.departamento).trigger('change');
-
-    //    const solicitanteAtual = chamado.Solicitante;
-    //    if (solicitanteAtual) {
-    //        const option = new Option(solicitanteAtual, solicitanteAtual, true, true);
-    //        $('#Solicitante').append(option).trigger('change');
-    //    }
-    //}
-
-    //// chama depois de inicializar o select2
-    //preencherFormulario();
-
-    // Preenche os campos com os dados do chamado (vindos do backend)
-
-
     function preencherFormulario() {
         $('#Assunto').val(chamadoModel.assunto);
         $('#DataAbertura').val(chamadoModel.dataAbertura);
@@ -180,41 +112,6 @@
     }
 
     preencherFormulario();
-
-    //// Botão salvar alterações
-    //$('#btnSalvar').click(function () {
-
-    //    if ($('#form').valid() != true) {
-    //        Swal.fire('Atenção', 'Por favor, corrija os erros do formulário.', 'warning');
-    //        return;
-    //    }
-
-    //    //let chamado = $('#form').serialize();
-    //    let chamadoVM = $('#form').serializeArray();
-    //    chamadoVM.push({ name: 'Solicitante', value: $('#Solicitante').val() });
-
-    //    $.ajax({
-    //        type: "POST",
-    //        //url: $('#form').attr('action'),
-    //        //url: '/Chamados/Cadastrar',
-    //        url: $('#form').attr('action') || '/Chamados/Cadastrar',
-    //        data: chamadoVM,
-    //        success: function (result) {
-    //            Swal.fire({
-    //                icon: result.Type,
-    //                title: 'Sucesso!',
-    //                text: result.Message,
-    //            }).then(() => {
-    //                window.location.href = '/' + result.Controller + '/' + result.Action;
-    //            });
-    //        },
-    //        error: function (xhr) {
-    //            let msg = xhr.responseJSON?.Message || 'Erro ao salvar o chamado.';
-    //            Swal.fire('Erro', msg, 'error');
-    //        }
-    //    });
-    //});
-
 
     $('#btnSalvar').click(function () {
 
@@ -237,12 +134,8 @@
             return;
         }
 
-        //let chamado = SerielizeForm($('#form'));
-        //let url = $('#form').attr('action');
-
         let chamado = SerielizeForm($('#form'));
 
-        // garante que o campo solicitante vai junto
         chamado.Solicitante = $('#Solicitante').val();
 
         let url = $('#form').attr('action');

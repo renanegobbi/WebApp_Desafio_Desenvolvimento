@@ -84,16 +84,6 @@
     <script src="~/lib/select2/js/i18n/pt-BR.js"></script>
 
     <script>
-        // // 👇 Passando os dados do Model do backend para o JS
-        // const chamadoModel = {
-        //     id: @Model.ID,
-        //     assunto: '@Model.Assunto'.replace(/'/g, "\\'"),
-        //     solicitante: '@Model.Solicitante'.replace(/'/g, "\\'"),
-        //     idDepartamento: @Model.IdDepartamento,
-        //     departamento: '@Model.Departamento'.replace(/'/g, "\\'"),
-        //     dataAbertura: '@Model.DataAbertura.ToString("dd/MM/yyyy")'
-        // };
-
         const chamadoModel = @Html.Raw(JsonConvert.SerializeObject(new
             {
                 id = Model.ID,
@@ -109,9 +99,6 @@
     <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.pt-br.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-
-    @* <script src="~/lib/select2/js/select2.min.js"></script>
-    <script src="~/lib/select2/js/i18n/pt-BR.js"></script> *@
 
     <script src="~/js/Chamados/Editar.js" asp-append-version="true"></script>
 }

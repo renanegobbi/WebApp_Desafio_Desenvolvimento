@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using WebApp_Desafio_FrontEnd.Models;
 using WebApp_Desafio_FrontEnd.ViewModels;
 using WebApp_Desafio_FrontEnd.ViewModels.Enums;
 
@@ -17,7 +16,7 @@ namespace WebApp_Desafio_FrontEnd.ApiClients.Desafio_API
         private const string chamadosGravarUrl = "api/Chamados/Gravar";
         private const string chamadosExcluirUrl = "api/Chamados/Excluir";
 
-        private string desafioApiUrl = "https://localhost:44388/"; // Endereço API IIS-Express
+        private string desafioApiUrl = "https://localhost:44388/";
         public string GetApiBaseUrl() => desafioApiUrl;
 
         public ChamadosApiClient() : base()
@@ -32,7 +31,7 @@ namespace WebApp_Desafio_FrontEnd.ApiClients.Desafio_API
                 { "TokenAutenticacao", tokenAutenticacao }
             };
 
-            var querys = default(Dictionary<string, object>); // Não há parâmetros para essa chamada
+            var querys = default(Dictionary<string, object>);
 
             var response = base.Get($"{desafioApiUrl}{chamadosListUrl}", querys, headers);
 
@@ -72,66 +71,9 @@ namespace WebApp_Desafio_FrontEnd.ApiClients.Desafio_API
                 { "TokenAutenticacao", tokenAutenticacao }
             };
 
-            //var response = base.Post($"{desafioApiUrl}{chamadosGravarUrl}", chamado, headers);
-
-            //base.EnsureSuccessStatusCode(response);
-
-            //string json = base.ReadHttpWebResponseMessage(response);
-
-            //return JsonConvert.DeserializeObject<ChamadoViewModel>(json);
-
-            //var response = base.Post($"{desafioApiUrl}{chamadosGravarUrl}", chamado, headers);
-
-            //string json = base.ReadHttpWebResponseMessage(response);
-
-            //if (response.StatusCode.Equals(200))
-            //{
-            //    // sucesso
-            //    var chamadoCriado = JsonConvert.DeserializeObject<ChamadoViewModel>(json);
-            //    return new ResponseViewModel(
-            //        $"Chamado {chamado.ID} gravado com sucesso!",
-            //        AlertTypes.success,
-            //        "Chamados",
-            //        "Listar");
-            //}
-            //else
-            //{
-            //    // erro → já vem no formato ResponseViewModel do backend
-            //    var erro = JsonConvert.DeserializeObject<ResponseViewModel>(json);
-            //    return erro;
-            //}
-
-            //var response = base.Post($"{desafioApiUrl}{chamadosGravarUrl}", chamado, headers);
-
-            //string json = base.ReadHttpWebResponseMessage(response);
-
-            //if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created)
-            //{
-            //    var chamadoVM = JsonConvert.DeserializeObject<ChamadoViewModel>(json);
-
-            //    return new ResponseViewModel(
-            //        $"Chamado gravado com sucesso! (ID: {chamadoVM.ID})",
-            //        AlertTypes.success,
-            //        "Chamados",
-            //        "Listar"
-            //    );
-            //}
-            //else
-            //{
-            //    var error = JsonConvert.DeserializeObject<ResponseViewModel>(json);
-
-            //    return new ResponseViewModel(
-            //        error.Message,
-            //        error.Type,
-            //        "Chamados",
-            //        "Cadastrar"
-            //    );
-            //}
-
             var response = base.Post($"{desafioApiUrl}{chamadosGravarUrl}", chamado, headers);
             string json = base.ReadHttpWebResponseMessage(response);
 
-            // Sucesso → retorna mensagem padronizada
             if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created)
             {
                 var chamadoVM = JsonConvert.DeserializeObject<ChamadoViewModel>(json);
@@ -144,7 +86,6 @@ namespace WebApp_Desafio_FrontEnd.ApiClients.Desafio_API
                 );
             }
 
-            // Erro → API devolve ErrorViewModel (da API, não do Front)
             try
             {
                 dynamic errorObj = JsonConvert.DeserializeObject(json);
@@ -152,7 +93,6 @@ namespace WebApp_Desafio_FrontEnd.ApiClients.Desafio_API
                 string message = errorObj?.Message ?? "Erro ao processar requisição.";
                 string typeStr = errorObj?.Type ?? "error";
 
-                // Converte string em enum AlertTypes
                 Enum.TryParse(typeStr, true, out AlertTypes alertType);
 
                 return new ResponseViewModel(
