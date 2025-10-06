@@ -74,7 +74,7 @@ As principais tarefas propostas foram:
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/renanegobbi/desafio-webapp-dotnet.git
+git clone https://github.com/renanegobbi/WebApp_Desafio_Desenvolvimento.git
 ```
 
 2. Abra o projeto no Visual Studio.
